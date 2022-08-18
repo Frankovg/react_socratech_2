@@ -1,0 +1,23 @@
+body {
+  background-color: rgb(43, 43, 43);
+  color: white;
+  .wrapper {
+    max-inline-size: 1300px;
+    margin: auto;
+    padding-top: 3rem;
+  }
+}
+
+.lista {
+  border: 1px solid grey;
+  padding: 4rem;
+  .calculadora {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 2rem;
+    h1 {
+      margin: 0;
+    }
+  }
+}
