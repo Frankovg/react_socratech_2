@@ -4,7 +4,6 @@ export const StringBoolean = () => {
   const [producto, setProducto] = useState("");
   const [listaCompra, setListaCompra] = useState([]);
   const [showList, setShowList] = useState(false);
-  const [openClose, setOpenClose] = useState("Mostrar");
   const [articulo, setArticulo] = useState("");
   const [lista, setLista] = useState([]);
 
@@ -26,21 +25,10 @@ export const StringBoolean = () => {
   };
 
   //ELIMINO ELEMENTO DE LA LISTA
-  const handleDelete = (e) => {
-    console.log(listaCompra);
-    let newList = listaCompra;
-    newList.pop();
-    setListaCompra([...newList]);
-  };
-
-  const mostrarCerrar = () => {
-    setShowList(!showList);
-
-    if (showList === true) {
-      setOpenClose("Mostrar");
-    } else {
-      setOpenClose("Ocultar");
-    }
+  const handleDelete = () => {
+    setListaCompra(
+      listaCompra.filter((elem, index) => index !== listaCompra.length - 1)
+    );
   };
 
   const handleChange2 = (e) => {
@@ -56,14 +44,13 @@ export const StringBoolean = () => {
     setArticulo("");
   };
 
-  const handleDelete2 = (lista, index) => {
+  const handleDelete2 = (i) => {
     let opcion = window.confirm(
       `¿Estás seguro que deseas eliminar el elemento?`
     );
     if (opcion === true) {
-      lista.splice(index, 1);
+      setLista(lista.filter((prod, index) => index !== i));
     }
-    setLista([...lista]);
   };
 
   return (
@@ -88,7 +75,9 @@ export const StringBoolean = () => {
       <div className="lista">
         <h1>EjerArrayBooleano</h1>
         <hr />
-        <button onClick={mostrarCerrar}>{openClose}</button>
+        <button onClick={() => setShowList(!showList)}>
+          {!showList ? "Mostrar" : "Cerrar"}
+        </button>
 
         {showList && (
           <>
@@ -103,7 +92,7 @@ export const StringBoolean = () => {
                   return (
                     <p key={index}>
                       {element}{" "}
-                      <button onClick={() => handleDelete2(lista, index)}>
+                      <button onClick={() => handleDelete2(index)}>
                         Borrar
                       </button>
                     </p>

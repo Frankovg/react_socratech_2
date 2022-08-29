@@ -1,34 +1,44 @@
 import React, { useState } from "react";
 
 export const Calculos = () => {
+  // Calculadora
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [operador, setOperador] = useState("+");
   const [resultado, setResultado] = useState("");
+  const [message, setMessage] = useState(false);
+  // Temperaturas
   const [resultado2, setResultado2] = useState("");
   const [temp, setTemp] = useState(0);
   const [indicador, setIndicador] = useState("");
 
   const calcular = () => {
-    switch (operador) {
-      case "+":
-        setResultado(num1 + num2);
-        break;
-      case "-":
-        setResultado(num1 - num2);
-        break;
-      case "÷":
-        setResultado(num1 / num2);
-        break;
-      case "x":
-        setResultado(num1 * num2);
-        break;
+    if (isNaN(parseFloat(num1)) || isNaN(parseFloat(num2))) {
+      setMessage(true);
+    } else {
+      let res = 0;
+      switch (operador) {
+        case "+":
+          res = parseFloat(num1) + parseFloat(num2);
+          break;
+        case "-":
+          res = parseFloat(num1) - parseFloat(num2);
+          break;
+        case "÷":
+          res = parseFloat(num1) / parseFloat(num2);
+          break;
+        case "x":
+          res = parseFloat(num1) * parseFloat(num2);
+          break;
+      }
+      setResultado(res);
+      setMessage(false);
     }
   };
 
   const calcular2 = () => {
-    if (indicador === "") {
-      setResultado2("Indicar conversión");
+    if (isNaN) {
+      alert("Intorduce un número");
     } else {
       switch (indicador) {
         case "ºC a ºF":
@@ -62,7 +72,6 @@ export const Calculos = () => {
 
   const cleaner = () => {
     setTemp(0);
-    setIndicador("Seleccionar conversión");
     setResultado2("");
   };
 
@@ -73,29 +82,39 @@ export const Calculos = () => {
         <div className="calculadora">
           <input
             type="number"
+            autoComplete="off"
             onChange={(event) => setNum1(event.target.value)}
             value={num1}
           />
           <h1>{operador}</h1>
           <input
             type="number"
+            autoComplete="off"
             onChange={(event) => setNum2(event.target.value)}
             value={num2}
           />
         </div>
         <button onClick={calcular}>Calcular</button>
         <p>Resultado: {resultado}</p>
+        {message && <h3>Uno de los operandos no es un número</h3>}
 
         <button onClick={() => setOperador("+")}>+</button>
         <button onClick={() => setOperador("-")}>-</button>
         <button onClick={() => setOperador("÷")}>÷</button>
         <button onClick={() => setOperador("x")}>x</button>
+        {/* darle estilo al botón según seleccionado o no:
+        className={operador === "+" ? 'select' : 'noSelect'} */}
       </div>
 
       <div className="lista">
         <h1>Compo Conversor</h1>
         <hr />
-        <input type="number" value={temp} onChange={handleChange} />
+        <input
+          type="number"
+          value={temp}
+          autoComplete="off"
+          onChange={handleChange}
+        />
         <p>Seleccionar conversión</p>
         <p>{indicador}</p>
 
